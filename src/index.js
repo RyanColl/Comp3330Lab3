@@ -2,16 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import store from "./customizedStore";
+import { BrowserRouter } from "react-router-dom";
+import { addBug, removeBug, resolveBug } from "./actions";
+
+store.subscribe(() => {
+  console.log("store changed!", store.getState());
+});
+
+const unsubscribe = store.subscribe(() => {
+  console.log("store changed!", store.getState());
+});
+
+store.dispatch(addBug("Bug 1"));
+
+store.dispatch(addBug("Bug 2"));
+
+store.dispatch(addBug("Bug 3"));
+
+store.dispatch(resolveBug(1))
+unsubscribe();
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
